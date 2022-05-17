@@ -6,8 +6,13 @@ class Post(models.Model):
     body = models.TextField(blank=True, default='')
     owner = models.ForeignKey('auth.User', related_name='posts', on_delete=models.CASCADE)
 
+    def __str__(self) -> str:
+        return self.title
+
     class Meta:
         ordering = ['created']
+        #db_table = "posts"
+
 
 class Comment(models.Model):
     created = models.DateTimeField(auto_now_add=True)
@@ -23,5 +28,9 @@ class Category(models.Model):
     owner = models.ForeignKey('auth.User', related_name='categories', on_delete=models.CASCADE)
     posts = models.ManyToManyField('Post', related_name='categories', blank=True)
 
+    def __str__(self) -> str:
+        return self.name
+
     class Meta:
+        #db_table = "categories"
         verbose_name_plural = 'categories'
